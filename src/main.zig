@@ -1,7 +1,7 @@
 //Imports
 const Video = @import("video.zig");
 const Renderer = @import("renderer.zig");
-
+const Font = @import("fonts.zig");
 //Constants
 const SCREEN_BLOCK:u5 = 28;
 const BACKGROUND_COLOR:u32 = 0x02020202;
