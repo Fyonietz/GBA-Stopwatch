@@ -1,7 +1,7 @@
 pub const VRAM_ADDRESS: u32 = 0x06000000;
 pub const SCREEN_WIDTH: u32 = 240;
 pub const SCREEN_HEIGHT: u32 = 160;
-pub const TILE : u32 = 32;
+pub const TILE_SIZE : u32 = 32;
 pub const Tile = [16]u32;
 //Display Control and Video Count
 

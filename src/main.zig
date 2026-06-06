@@ -1,10 +1,11 @@
 //Imports
 const Video = @import("video.zig");
 const Renderer = @import("renderer.zig");
-const Font = @import("fonts.zig");
+const Fonts = @import("fonts.zig");
+const Engine = @import("engine.zig");
 //Constants
 const SCREEN_BLOCK:u5 = 28;
-const BACKGROUND_COLOR:u32 = 0x02020202;
+const BACKGROUND_COLOR = 0x02020202;
 
 //Functions
 fn load_background_pallete() void{
@@ -30,6 +31,7 @@ fn set_background_color(map_to_tile_data:[*]volatile Video.Tile,map_to_screen:[*
         map_to_screen[i] = 0;
     } 
 }
+
 export fn _start() noreturn{
     //Init 
     Video.DISPLAY_CONTROL.* = Video.DISPLAY_CONTROL_MODE_0 | Video.DISPLAY_CONTROL_BACKGROUND_0;
@@ -37,13 +39,8 @@ export fn _start() noreturn{
     const map_to_tile_data = Video.character_block_ptr(0); 
     load_background_pallete();
     set_background_color(map_to_tile_data, map_to_screen, BACKGROUND_COLOR);
-    var row : usize = 0;
-    while(row < 16):(row+=1){
-        map_to_tile_data[1][row] = 0x04030404;
-        map_to_tile_data[2][row] = 0x03030303;
-    }
-    map_to_screen[5 * Video.TILE + 10] = 1;
-    map_to_screen[10 * Video.TILE + 10] = 2;
+    Renderer.draw_pixel(.{.Id = 1,.Tile = Fonts.Data.Number_0,.Map = map_to_tile_data});
+    map_to_screen[6 * Video.TILE_SIZE + 8] = 1;
     Video.BACKGROUND_0_CONTROL.* = Video.background_control(0, 0, SCREEN_BLOCK, true);
     while (true) {
         Video.video_blank_start();
