@@ -12,26 +12,14 @@ fn reverse_endian(data:anytype) u32{
            (@as(u32,data & 0xFF000000) >> 24);
 }
 
-pub fn draw_pixel(obj:Engine.Object) void{
-    // var block:u32 = 0;
-    // while(block < 16):(block+=1){
-    //     var column_counter:u5 = 0;
-    //     if(block % 2 == 0){
-    //         column_counter = 0 ;
-    //         while(column_counter < 4) : (column_counter+=1){
-    //             var row_counter:u5 = 0;
-    //             while(row_counter < 7) : (row_counter+=1){
-    //                 obj.Map[obj.Id][block] =  packed_byte(row_counter,column_counter,obj.Tile);
-    //             }
-    //         }
-    //     }else{
-    //
-    //     }
-    // }
+pub fn draw_pixel(obj: Engine.Object) void {
+    var block: u32 = 0;
 
-    obj.Map[obj.Id][0]=reverse_endian(obj.Tile[0][0]);
-    obj.Map[obj.Id][1]=reverse_endian(obj.Tile[0][1]);
-}
-
-//Target
-//Jikalau Tile Genap Iterates Sampai 3,Jikaulau Tile Ganjil Iterates Mulai dari 3 Sampai 7
+    while (block < 16) : (block += 1) {
+        const row = block / 2;
+        const col = block % 2;
+        if(row < 7){
+            obj.Map[obj.Id][block] = reverse_endian(obj.Tile[row][col]);
+        }
+    }
+}   
